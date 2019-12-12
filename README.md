@@ -11,7 +11,7 @@
 
 ## Installing NDCTL
 
-See [Installing NDCTL](../getting-started-guide/installing-ndctl.md) in the [Getting Started](../getting-started-guide/) Guide.
+See [Installing NDCTL](https://github.com/sscargal/pmem-docs-ndctl-user-guide/tree/bad2d0a9e4528c1cc9d2aa6271f8a427dad45420/getting-started-guide/installing-ndctl.md) in the [Getting Started](https://github.com/sscargal/pmem-docs-ndctl-user-guide/tree/bad2d0a9e4528c1cc9d2aa6271f8a427dad45420/getting-started-guide/README.md) Guide.
 
 ## Basic Usage
 
@@ -27,7 +27,6 @@ The `ndctl` command is designed to be user friendly. Once installed, a list of c
 
  See 'ndctl help COMMAND' for more information on a specific command.
  ndctl --list-cmds to see all available commands
-
 ```
 
 2\) Using `ndctl help` displays basic help and syntax:
@@ -84,7 +83,7 @@ monitor
 help
 ```
 
-An alternative method for listing commands uses the [TAB key completion](./#tab-command-and-argument-completion) feature of ndctl.  By executing `ndctl <TAB> <TAB>` we can list the commands, eg:
+An alternative method for listing commands uses the [TAB key completion](./#tab-command-and-argument-completion) feature of ndctl. By executing `ndctl <TAB> <TAB>` we can list the commands, eg:
 
 ```text
 # ndctl <TAB> <TAB>
@@ -114,7 +113,7 @@ all     nmem0
 
 ### Getting Help
 
-NDCTL ships with a man page for each command. Each man page describes the required arguments and features in detail. Man pages can be found and accessed using the `man` or `ndctl` utilities.  The following `man -k ndctl` searches for any man page containing the "ndctl" keyword:
+NDCTL ships with a man page for each command. Each man page describes the required arguments and features in detail. Man pages can be found and accessed using the `man` or `ndctl` utilities. The following `man -k ndctl` searches for any man page containing the "ndctl" keyword:
 
 ```text
 # man -k ndctl
@@ -235,6 +234,4 @@ To list all active/enabled and disabled/inactive \(idle\) NVDIMMs, Regions, and 
 ```text
 # ndctl list -iNuRD
 ```
-
-
 

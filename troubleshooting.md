@@ -212,9 +212,9 @@ If the `ndctl` utility was installed using the ndctl package from the operating 
 # sudo dnf update -y ndctl
 ```
 
-If the latest version within the package repository is old with no new versions available, download, compile, and install from source code. Detailed instructions can be found in the [Installing NDCTL](../getting-started-guide/installing-ndctl.md) chapter.
+If the latest version within the package repository is old with no new versions available, download, compile, and install from source code. Detailed instructions can be found in the [Installing NDCTL](https://github.com/sscargal/pmem-docs-ndctl-user-guide/tree/bad2d0a9e4528c1cc9d2aa6271f8a427dad45420/getting-started-guide/installing-ndctl.md) chapter.
 
-If the `ndctl` utility was previously compiled and installed using source code, download the latest version from the [ndctl GitHub repository](https://github.com/pmem/ndctl), compile, and install. Detailed instructions can be found in the [Installing NDCTL](../getting-started-guide/installing-ndctl.md) chapter.
+If the `ndctl` utility was previously compiled and installed using source code, download the latest version from the [ndctl GitHub repository](https://github.com/pmem/ndctl), compile, and install. Detailed instructions can be found in the [Installing NDCTL](https://github.com/sscargal/pmem-docs-ndctl-user-guide/tree/bad2d0a9e4528c1cc9d2aa6271f8a427dad45420/getting-started-guide/installing-ndctl.md) chapter.
 
 ## Error: namespace0.0 is active, specify --force for re-configuration
 
@@ -368,7 +368,7 @@ There are many potential causes including:
 
 **Solution:**
 
-Use the `-v` option to print more information to help identify the cause. A debug version of `ndctl` may be required to get useful information. See [Installing NDCTL](../getting-started-guide/installing-ndctl.md) for instructions to build `ndctl` with debug options from source code.
+Use the `-v` option to print more information to help identify the cause. A debug version of `ndctl` may be required to get useful information. See [Installing NDCTL](https://github.com/sscargal/pmem-docs-ndctl-user-guide/tree/bad2d0a9e4528c1cc9d2aa6271f8a427dad45420/getting-started-guide/installing-ndctl.md) for instructions to build `ndctl` with debug options from source code.
 
 For a scenario where there's no space left within the region, a message similar to the following will be shown:
 
@@ -405,7 +405,7 @@ ndctl: nothing appropriate.
 
 **Cause:**
 
-If you built ndctl from source, the man page indexes may not have been automatically generated for you.  Additionally, if you installed ndctl to a non-default location, your $MANPATH shell environment variable may not been updated to point to to the new man page locations.
+If you built ndctl from source, the man page indexes may not have been automatically generated for you. Additionally, if you installed ndctl to a non-default location, your $MANPATH shell environment variable may not been updated to point to to the new man page locations.
 
 **Solution:**
 
@@ -436,7 +436,7 @@ If you built ndctl from source, the man page indexes may not have been automatic
 # sudo mandb -c
 ```
 
-This command may take a few minutes depending on the number of search paths and man pages it has to index.  The output is verbose as it scans and indexes.  Once complete, it will provide a summary:
+This command may take a few minutes depending on the number of search paths and man pages it has to index. The output is verbose as it scans and indexes. Once complete, it will provide a summary:
 
 ```text
 ...
