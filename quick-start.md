@@ -1,6 +1,6 @@
 # Quick Start
 
-The `ndctl` command is designed to be user friendly. Once [installed](installing-ndctl.md), a list of commands can be shown using any of the following:
+The `ndctl` command is designed to be user friendly. Once [installed](installing-ndctl/), a list of commands can be shown using any of the following:
 
 1\) With no arguments or options, `ndctl` shows a simple usage message:
 
@@ -68,7 +68,7 @@ monitor
 help
 ```
 
-An alternative method for listing commands uses the [TAB key completion](/#tab-command-and-argument-completion) feature of ndctl. By executing `ndctl <TAB> <TAB>` we can list the commands, eg:
+An alternative method for listing commands uses the TAB key completion feature of ndctl. By typing`ndctl <TAB> <TAB>` we can list the available commands, eg:
 
 ```text
 # ndctl <TAB> <TAB>
@@ -135,7 +135,7 @@ ndctl-zero-labels (1) - zero out the label area on a dimm or set of dimms
 ```
 
 {% hint style="info" %}
-Note: If `man -k ndctl` returns "ndctl: nothing appropriate." or similar, see the [Troubleshooting](troubleshooting.md#man-k-ndctl-returns-ndctl-nothing-appropriate) section to manually build the indexes.
+Note: If `man -k ndctl` returns "ndctl: nothing appropriate." or similar, see the [Troubleshooting](troubleshooting.md) section to manually build the indexes.
 {% endhint %}
 
 Additionally, executing `ndctl help <command>` can be used to display the man page for the command, eg:
@@ -146,7 +146,7 @@ Additionally, executing `ndctl help <command>` can be used to display the man pa
 
 A list of ndctl man pages are available online. See '[NDCTL Man Pages](man-pages.md)' for a complete list.
 
-## Displaying Bus, NVDIMM, Region, and Namespace Information
+### Displaying Bus, NVDIMM, Region, and Namespace Information
 
 The `ndctl list` command is a very powerful and feature rich command. A list of options is shown below:
 

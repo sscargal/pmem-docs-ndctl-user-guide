@@ -1,8 +1,10 @@
-# References
+# Reference Material
 
-The following is a list of additional reference material:
+The following is a list of reference material:
 
 ## Documents
+
+See the latest documentation for the NVDIMM kernel sub-system here: [https://git.kernel.org/cgit/linux/kernel/git/nvdimm/nvdimm.git/tree/Documentation/nvdimm/nvdimm.txt?h=libnvdimm-for-next](https://git.kernel.org/cgit/linux/kernel/git/nvdimm/nvdimm.git/tree/Documentation/nvdimm/nvdimm.txt?h=libnvdimm-for-next)
 
 ACPI v6.0: [http://www.uefi.org/sites/default/files/resources/ACPI\_6.0.pdf ](http://www.uefi.org/sites/default/files/resources/ACPI_6.0.pdf)
 

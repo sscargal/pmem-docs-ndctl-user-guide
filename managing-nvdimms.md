@@ -45,7 +45,7 @@ By default, `ndctl` only lists enabled/active dimms, regions, and namespaces. To
 ```
 
 {% hint style="info" %}
-NVDIMM vendor specific tools can be used to display more information about the NVDIMMs from the operating system layer. For example, Intel Optane DC Persistent Memory Modules can be managed using the [ipmctl](https://github.com/intel/ipmctl) utility. These tools are outside the scope for this documentation. Refer to the vendor specific documentation.
+NVDIMM vendor specific tools can be used to display more information about the NVDIMMs from the operating system layer. For example, Intel Optane DC Persistent Memory Modules can be managed using the [ipmctl](https://github.com/intel/ipmctl) utility. Refer to the [IPMCTL User Guide](https://docs.pmem.io/ipmctl-user-guide/) for more information. For other persistent memory products, refer to the vendor specific documentation.
 {% endhint %}
 
 ## Disabling NVDIMMs
