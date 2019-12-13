@@ -1,6 +1,8 @@
 # Table of contents
 
 * [NDCTL User Guide](README.md)
+* [Installing NDCTL](installing-ndctl.md)
+* [Quick Start](quick-start.md)
 * [Concepts](concepts/README.md)
   * [PMEM and BLK Modes](concepts/libnvdimm-pmem-and-blk-modes.md)
   * [Regions](concepts/regions/README.md)
