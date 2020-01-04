@@ -9,38 +9,5 @@
 * Enabling and Disabling NVDIMMs, Regions, and Namespaces
 * Managing NVDIMM Labels
 
-## What's new in v66
 
-This release incorporates functionality up to the 5.3 kernel, and adds a number of bug fixes, and improvements.
-
-Highlights include a new command to reconfigure dax devices to different modes \(devdax - default, and system-ram - to hotplug the dax device as system memory\), improvements to ndctl-{read,write,init}-labels allowing smaller sized reads/writes, usability fixes to ndctl-monitor, and ndctl-create-namespace, and a fix to ndctl-check-namespace allowing it to be used on systems with different page sizes.
-
-Commands: 
-
-* daxctl-reconfigure-device: new command for device mode management 
-* daxctl-{on,off}line-memory: new commands for devices in system-ram mode monitor: logging improvements, allow sending to background inject-error: refuse to operate on active BTT namespaces \*-labels: improvements to minimize data transfer 
-* create-namespace: usability improvements around region search
-
-APIs: 
-
-* ndctl\_cmd\_cfg\_read\_set\_extent 
-* ndctl\_cmd\_cfg\_write\_set\_extent 
-* ndctl\_dimm\_read\_label\_extent 
-* ndctl\_dimm\_read\_label\_index 
-* ndctl\_dimm\_zero\_label\_extent 
-* daxctl\_dev\_disable 
-* daxctl\_dev\_enable\_devdax 
-* daxctl\_dev\_enable\_ram 
-* daxctl\_dev\_get\_ctx 
-* daxctl\_dev\_get\_memory
-* daxctl\_dev\_get\_resource 
-* daxctl\_dev\_get\_target\_node 
-* daxctl\_dev\_is\_enabled 
-* daxctl\_memory\_get\_block\_size 
-* daxctl\_memory\_get\_dev 
-* daxctl\_memory\_get\_node\_path 
-* daxctl\_memory\_is\_online 
-* daxctl\_memory\_num\_sections 
-* daxctl\_memory\_offline 
-* daxctl\_memory\_online
 

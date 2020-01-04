@@ -118,14 +118,14 @@ Unlock is performed by the kernel, however a preparation step must happen before
 4. Create the unlock DSM, copy the decrypted payload into the DSM
 5. Issue the DSM to unlock the DIMM
 
-If the DIMM is already unlocked, the kernel will attempt to re-validate the passphrase. If we fail to revalidate the passphrase, the kernel will freeze the security and disallow any further security configuration changes. A kernel module parameter is available to override this behavior.
+If the DIMM is already unlocked, the kernel will attempt to revalidate the passphrase. If we fail to revalidate the passphrase, the kernel will freeze the security and disallow any further security configuration changes. A kernel module parameter is available to override this behavior.
 
 ## Loading Keys
 
 {% hint style="info" %}
 **Note\#1:** All key files are expected to be in the format: nvdimm_\_hostname The '_' character is used to delimit the different components in the file name. Within the hostname, the '\_' character is allowed since it is the last component of the file name.
 
-**Note\#2:** This command is typically never called directly by a user.
+**Note\#1:** This command is typically never called directly by a user.
 {% endhint %}
 
 The `load-keys` command loads the master key \(kek\) and the encrypted passphrases for all NVDIMMs into the user keyring maintained by the kernel. The command is expected to be called during initialization and before the libnvdimm kernel module is loaded, typically from an initrd. This is typically set up using a modprobe config that calls the command before module load.
