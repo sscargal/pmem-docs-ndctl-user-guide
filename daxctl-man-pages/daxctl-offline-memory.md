@@ -1,12 +1,12 @@
 # daxctl−offline−memory\(1\)
 
-[NAME]()  
-[SYNOPSIS]()  
-[EXAMPLES]()  
-[DESCRIPTION]()  
-[OPTIONS]()  
-[COPYRIGHT]()  
-[SEE ALSO]()
+[NAME](daxctl-offline-memory.md#name)  
+[SYNOPSIS](daxctl-offline-memory.md#synopsis)  
+[EXAMPLES](daxctl-offline-memory.md#examples)  
+[DESCRIPTION](daxctl-offline-memory.md#description)  
+[OPTIONS](daxctl-offline-memory.md#options)  
+[COPYRIGHT](daxctl-offline-memory.md#copyright)  
+[SEE ALSO](daxctl-offline-memory.md#see-also)
 
 ## NAME
 
