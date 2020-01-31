@@ -21,7 +21,7 @@ Commands:
 * [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): add --no-movable option 
 * [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): display movable state in listings 
 * [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): detect races in memory onlining 
-* security: support for 'security frozen' attribute
+* [ndctl-freeze-security](ndctl-man-pages/ndctl-freeze-security.md): support for 'security frozen' attribute
 
 APIs: 
 

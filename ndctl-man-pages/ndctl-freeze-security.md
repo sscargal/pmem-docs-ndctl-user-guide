@@ -51,6 +51,8 @@ $ ndctl list -d nmem0
 
 ## OPTIONS
 
+&lt;dimm&gt;
+
 A _nmemX_ device name, or a dimm id number. The keyword _all_ can be specified to carry out the operation on every dimm in the system, optionally filtered by bus id \(see −−bus= option\).
 
 −b, −−bus=

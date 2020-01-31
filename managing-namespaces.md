@@ -441,7 +441,7 @@ brw-rw----. 1 root disk 259, 0 Jul  9 10:52 /dev/pmem0
 
 ## Editing Namespace Properties
 
-Changing properties of existing namespaces can be done online using the `ndctl create-namespace -fe <namespace> <option=value>` command. The `-e, --reconfigure` flag edits existing namespaces. Using the `-f` flag does not require that the namespace be manually disabled. The command may still fail if the namespace is currently being used. Supported options are listed above in the [Creating Namespaces](managing-namespaces.md#creating-namespaces) section, or review the ndctl-create-namespace [man page](ndctl-man-pages/). Some namespace properties are read-only and cannot be changed using the `ndctl` utility.
+Changing properties of existing namespaces can be done online using the `ndctl create-namespace -fe <namespace> <option=value>` command. The `-e, --reconfigure` flag edits existing namespaces. Using the `-f` flag does not require that the namespace be manually disabled. The command may still fail if the namespace is currently being used. Supported options are listed above in the [Creating Namespaces](managing-namespaces.md#creating-namespaces) section, or review the ndctl-create-namespace [man page](man-pages.md). Some namespace properties are read-only and cannot be changed using the `ndctl` utility.
 
 [Resizing Namespaces](managing-namespaces.md#resizing-namespaces) or [Changing Namespace Modes](managing-namespaces.md#changing-namespace-modes) can be achieved by changing existing namespace properties. They are discussed below under their own headings to provide additional detail.
 
