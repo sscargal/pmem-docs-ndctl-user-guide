@@ -28,5 +28,5 @@ LIBNDCTL: [https://github.com/pmem/ndctl.git ](https://github.com/pmem/ndctl.git
 
 NDCTL: [https://github.com/pmem/ndctl](https://github.com/pmem/ndctl)
 
-PMEM: [https://github.com/01org/prd](https://github.com/01org/prd)
+Persistent Memory Development Kit \(PMDK\): [https://github.com/pmem/pmdk](https://github.com/pmem/pmdk)
 
