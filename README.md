@@ -9,5 +9,23 @@
 * Enabling and Disabling NVDIMMs, Regions, and Namespaces
 * Managing NVDIMM Labels
 
+## What's new in v67
 
+This release incorporates functionality up to the 5.4 kernel, and adds a number of bug fixes, and improvements.
+
+Highlights include small changes for PowerPC compatibility, improvements to the dax.sh unit test to detect failures in mapping huge pages, support for the 'security frozen' attribute, user experience improvements for the daxctl-reconfigure-device command, including an option to specify movable vs. non-movable state for onlining memory, and an option to allow create-namespaces to create a maximal configuration until it exhausts all available region capacity.
+
+Commands: 
+
+* [create-namespace](ndctl-man-pages/ndctl-create-namespace.md): add --continue option 
+* [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): add --no-movable option 
+* [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): display movable state in listings 
+* [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): detect races in memory onlining 
+* security: support for 'security frozen' attribute
+
+APIs: 
+
+* ndctl\_dimm\_security\_is\_frozen 
+* daxctl\_memory\_is\_movable 
+* daxctl\_memory\_online\_no\_movable
 
