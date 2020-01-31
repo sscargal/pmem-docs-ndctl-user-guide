@@ -17,7 +17,7 @@
 * [Managing Label Storage Areas \(LSA\)](managing-label-storage-areas-lsa.md)
 * [Managing Namespaces](managing-namespaces.md)
 * [Managing NVDIMM Security](managing-nvdimm-security.md)
-* [NDCTL Man Pages](man-pages.md)
+* [NDCTL Man Pages](ndctl-man-pages/README.md)
   * [ndctl\(1\)](ndctl-man-pages/untitled.md)
   * [ndctl−check−labels\(1\)](ndctl-man-pages/ndctl-check-labels.md)
   * [ndctl−check−namespace\(1\)](ndctl-man-pages/ndctl-check-namespace.md)
