@@ -3,7 +3,7 @@
 * [NDCTL User Guide](README.md)
 * [Installing NDCTL & DAXCTL](installing-ndctl/README.md)
   * [Installing NDCTL and DAXCTL Packages on Linux](installing-ndctl/installing-ndctl-packages-on-linux.md)
-  * [Installing NDCTL from Source on Linux](installing-ndctl/installing-ndctl-from-source-on-linux.md)
+  * [Installing NDCTL and DAXCTL from Source on Linux](installing-ndctl/installing-ndctl-from-source-on-linux.md)
 * [Quick Start](quick-start.md)
 * [Concepts](concepts/README.md)
   * [NVDIMM Devices](concepts/nvdimm-devices.md)

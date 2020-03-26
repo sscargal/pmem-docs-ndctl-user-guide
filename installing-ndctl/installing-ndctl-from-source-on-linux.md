@@ -1,6 +1,6 @@
-# Installing NDCTL from Source on Linux
+# Installing NDCTL and DAXCTL from Source on Linux
 
-These instructions provide a step-by-step guide for installing the `ndctl` and `daxctl` utilities from the latest GitHub [master branch](https://github.com/pmem/ndctl).
+These instructions provide a step-by-step guide for installing the `ndctl` and `daxctl` utilities from the GitHub project [master branch](https://github.com/pmem/ndctl).
 
 ### 1. Install the Prerequisites
 
@@ -8,7 +8,7 @@ There are a number of packages required for the build steps that may not be inst
 
 [https://github.com/pmem/ndctl/blob/master/ndctl.spec.in](https://github.com/pmem/ndctl/blob/master/ndctl.spec.in)
 
-To successfully compile ndctl from source with documentation, the following packages are required
+To successfully compile ndctl and daxctl from source with documentation, the following packages are required
 
 * autoconf 
 * automake 
