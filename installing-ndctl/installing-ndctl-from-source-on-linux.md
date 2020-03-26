@@ -54,22 +54,32 @@ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc asciidoctor xmlto li
 {% endtab %}
 
 {% tab title="RHEL & CentOS" %}
-Some of the required packages can be found in the EPEL repository. Verify the EPEL repository is active:
+Some of the required packages can be found in the EPEL repository \(Extra Packages for Enterprise Linux\). 
+
+Verify the EPEL repository is available and active:
+
+```text
+yum repolist
+```
+
+Example:
 
 ```text
 $ yum repolist
+repo id                                                       repo name                                      status
+epel/x86_64                                                   Extra Packages for Enterprise Linux 7 - x86_64 13,217
 ```
 
 If the EPEL repository is not listed, install and activate it using:
 
 ```text
-$ sudo yum install epel-release
+sudo yum install epel-release
 ```
 
 Install the required packages
 
 ```text
-$ sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
+sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
 ```
 {% endtab %}
 
@@ -103,24 +113,23 @@ $ sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bas
 2.1\) If you're behind a company proxy, configure git to work with your proxy server first. The following configures a HTTP and HTTPS proxy for all users. Refer to the [git-config documentation](https://git-scm.com/docs/git-config) for more options and information.
 
 ```text
-$ git config --global http.proxy http://proxyUsername:proxyPassword@proxy.server.com:port
-
-$ git config --global https.proxy https://proxyUsername:proxyPassword@proxy.server.com:port
+git config --global http.proxy http://proxyUsername:proxyPassword@proxy.server.com:port
+git config --global https.proxy https://proxyUsername:proxyPassword@proxy.server.com:port
 ```
 
 2.2\) Create a working directory to clone the ndctl GitHub repository to, eg: 'downloads'
 
 ```text
-$ sudo mkdir /downloads
-$ sudo chmod +w /downloads
+sudo mkdir /downloads
+sudo chmod 777 /downloads
 ```
 
 2.3\) Clone the repository:
 
 ```text
-$ cd /downloads
-$ sudo git clone https://github.com/pmem/ndctl
-$ cd ndctl
+cd /downloads
+git clone https://github.com/pmem/ndctl
+cd ndctl
 ```
 
 ### 3. Build
@@ -128,9 +137,9 @@ $ cd ndctl
 The following configures ndctl to be installed in to the /usr/local directory.
 
 ```text
-$ sudo ./autogen.sh
-$ sudo ./configure CFLAGS='-g -O2' --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
-$ sudo make
+./autogen.sh
+./configure CFLAGS='-g -O2' --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
+make
 ```
 
 #### **Build using an alternative compiler**
@@ -138,7 +147,7 @@ $ sudo make
 **Note:** If you want to compile with a different compiler other than gcc, you have to provide the CC and CXX environment variables. For example:
 
 ```text
-$ sudo make CC=clang CXX=clang++
+make CC=clang CXX=clang++
 ```
 
 These variables are independent and setting CC=clang does not set CXX=clang++.
@@ -148,15 +157,15 @@ These variables are independent and setting CC=clang does not set CXX=clang++.
 To compile ndctl with debugging, use the `--enable-debug` option:
 
 ```text
-$ sudo ./autogen.sh
-$ sudo ./configure CFLAGS='-g -O2' --enable-debug --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
-$ sudo make
+./autogen.sh
+./configure CFLAGS='-g -O2' --enable-debug --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
+make
 ```
 
 For a full list of configure options use:
 
 ```text
-$ ./configure --help
+./configure --help
 ```
 
 ### 4. Install
@@ -164,7 +173,7 @@ $ ./configure --help
 Once ndctl has successfully been compiled, it can be installed using the following:
 
 ```text
-$ sudo make install
+sudo make install
 ```
 
 ### 5. Build and Run Unit Tests \(Optional\)
