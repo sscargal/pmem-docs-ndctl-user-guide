@@ -34,7 +34,7 @@ dnf install ndctl
 {% endtab %}
 
 {% tab title="RHEL & CentOS" %}
-The ndctl package is available on CentOS and RHEL 7.0 or later.
+The ndctl package is available on CentOS, RHEL, RHEL for SAP HANA 7.0 or later. 
 
 1\) Query the repository to identify if ndctl is delivered:
 
@@ -50,6 +50,8 @@ $ yum install ndctl
 {% endtab %}
 
 {% tab title="SLES & OpenSUSE" %}
+The ndctl package is available for OpenSUSE, SUSE Linux Enterprise Server \(SLES\), and SLES for SAP HANA v12.x or later.
+
 1\) Query the repository to identify if ndctl is delivered:
 
 ```text

@@ -22,6 +22,10 @@ The capacity of an NVDIMM REGION \(contiguous span of persistent memory\) is acc
 
 The UEFI specification defines the _NVDIMM Label Protocol_ as the combination of label area access methods and a data format for provisioning one or more NAMESPACE objects from a REGION. Note that label support is optional and if Linux does not detect the label capability it will automatically instantiate a "label−less" namespace per region. Examples of label−less namespaces are the ones created by the kernel’s _memmap=ss!nn_ command line option \(see the nvdimm wiki on kernel.org\), or NVDIMMs without a valid _namespace index_ in their label area.
 
+{% hint style="info" %}
+Note: Label-less namespaces lack many of the features of their label-rich cousins. For example, their size cannot be modified, or they cannot be fully destroyed \(i.e. the space reclaimed\). A destroy operation will zero any mode-specific metadata. Finally, for create-namespace operations on label-less namespaces, ndctl bypasses the region capacity availability checks, and always satisfies the request using the full region capacity. The only reconfiguration operation supported on a label-less namespace is changing its mode.
+{% endhint %}
+
 A namespace can be provisioned to operate in one of 4 modes, _fsdax_, _devdax_, _sector_, and _raw_. Here are the expected usage models for these modes:
 
 • **fsdax**: Filesystem−DAX mode is the default mode of a namespace when specifying _ndctl create−namespace_ with no options. It creates a block device \(/dev/pmemX\[.Y\]\) that supports the DAX capabilities of Linux filesystems \(xfs and ext4 to date\). DAX removes the page cache from the I/O path and allows mmap\(2\) to establish direct mappings to persistent memory media. The DAX capability enables workloads / working−sets that would exceed the capacity of the page cache to scale up to the capacity of persistent memory. Workloads that fit in page cache or perform bulk data transfers may not see benefit from DAX. When in doubt, pick this mode.
@@ -106,6 +110,10 @@ Given relative capacities of "Persistent Memory" to "System
 RAM" the allocation defaults to reserving space out of the  
 namespace directly \("−−map=dev"\). The overhead is 64−bytes per  
 4K \(16GB per 1TB\) on x86.
+
+-c, --continue 
+
+Do not stop after creating one namespace. Instead, greedily create as many namespaces as possible within the given --bus and --region filter restrictions. This will abort if any creation attempt results in an error unless --force is also supplied.
 
 −f, −−force
 

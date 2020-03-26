@@ -16,7 +16,7 @@ NVDIMM DSM Interface Example: [http://pmem.io/documents/NVDIMM\_DSM\_Interface\_
 
 NVDIMM Driver Writer's Guide: [http://pmem.io/documents/NVDIMM\_Driver\_Writers\_Guide.pdf](http://pmem.io/documents/NVDIMM_Driver_Writers_Guide.pdf)
 
-NVDIMM Namespace: [http://pmem.io/documents/NVDIMM\_Namespace\_Spec.pdf ](http://pmem.io/documents/NVDIMM_Namespace_Spec.pdf)
+NVDIMM Namespace Specification: [http://pmem.io/documents/NVDIMM\_Namespace\_Spec.pdf ](http://pmem.io/documents/NVDIMM_Namespace_Spec.pdf)
 
 UEFI Specification \(Latest\): [http://www.uefi.org/specifications](http://www.uefi.org/specifications)
 
@@ -28,5 +28,5 @@ LIBNDCTL: [https://github.com/pmem/ndctl.git ](https://github.com/pmem/ndctl.git
 
 NDCTL: [https://github.com/pmem/ndctl](https://github.com/pmem/ndctl)
 
-PMEM: [https://github.com/01org/prd](https://github.com/01org/prd)
+Persistent Memory Development Kit \(PMDK\): [https://github.com/pmem/pmdk](https://github.com/pmem/pmdk)
 
