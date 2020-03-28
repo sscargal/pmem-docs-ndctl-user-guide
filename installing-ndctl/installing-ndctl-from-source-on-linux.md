@@ -54,6 +54,8 @@ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc asciidoctor xmlto li
 {% endtab %}
 
 {% tab title="RHEL & CentOS" %}
+These instructions apply to RHEL, CentOS, and RHEL for SAP HANA v7.6 or later.
+
 Some of the required packages can be found in the EPEL repository \(Extra Packages for Enterprise Linux\). 
 
 Verify the EPEL repository is available and active:
@@ -80,14 +82,6 @@ Install the required packages
 
 ```text
 sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
-```
-{% endtab %}
-
-{% tab title="SLES & OpenSUSE" %}
-Install the prerequisite packages
-
-```text
-sudo zypper install -y git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
 ```
 {% endtab %}
 
@@ -122,14 +116,13 @@ git config --global https.proxy https://proxyUsername:proxyPassword@proxy.server
 2.2\) Create a working directory to clone the ndctl GitHub repository to, eg: 'downloads'
 
 ```text
-sudo mkdir /downloads
-sudo chmod 777 /downloads
+mkdir ~/downloads
 ```
 
 2.3\) Clone the repository:
 
 ```text
-cd /downloads
+cd ~/downloads
 git clone https://github.com/pmem/ndctl
 cd ndctl
 ```
