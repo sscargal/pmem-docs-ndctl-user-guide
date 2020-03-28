@@ -17,12 +17,12 @@ Highlights for this release include new commands to read-infoblock and write-inf
 
 Commands: 
 
-* zero-labels: display an error if regions are active 
+* [zero-labels](ndctl-man-pages/ndctl-zero-labels.md): display an error if regions are active 
 * destroy-namespace: fix seed namespace accounting 
-* list: drop named list objects from verbose listing 
+* [list](ndctl-man-pages/ndctl-list.md): drop named list objects from verbose listing 
 * \*-namespace: emit better errors on failure 
-* read-infoblock: new command to read an infoblock 
-* write-infoblock: new command to create and write an infoblock
+* [read-infoblock](ndctl-man-pages/ndctl-read-infoblock.md): new command to read an infoblock 
+* [write-infoblock](ndctl-man-pages/ndctl-write-infoblock.md): new command to create and write an infoblock
 
 APIs: 
 

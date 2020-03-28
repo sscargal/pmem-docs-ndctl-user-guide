@@ -58,18 +58,25 @@ Create a _pmem_ or _blk_ namespace \(subject to available capacity\). A pmem nam
 
 −m, −−mode=
 
-* "raw": expose the namespace capacity directly with limitations. Neither a raw pmem namepace nor raw blk namespace support sector atomicity by default \(see "sector" mode below\). A raw pmem namespace may have limited to no dax support depending the kernel. In other words operations like direct−I/O targeting a dax buffer may fail for a pmem namespace in raw mode or indirect through a page−cache buffer. See "fsdax" and "devdax" mode for dax operation.
-* "sector": persistent memory, given that it is byte addressable, does not support sector atomicity. The problematic aspect of sector tearing is that most applications do not know they have a atomic sector update dependency. At least a disk rarely ever tears sectors and if it does it almost certainly returns a checksum error on access. Persistent memory devices will always tear and always silently. Until an application is audited to be robust in the presence of sector−tearing "safe" mode is recommended. This imposes some performance overhead and disables the dax capability. \(also known as "safe" or "btt" mode\)
-* "fsdax": A pmem namespace in this mode supports dax operation with a block−device based filesystem \(in previous ndctl releases this mode was named "memory" mode\). This mode comes at the cost of allocating per−page metadata. The capacity can be allocated from "System RAM", or from a reserved portion of "Persistent Memory" \(see the −−map= option\). NOTE: A filesystem that supports DAX is required for dax operation. If the raw block device \(/dev/pmemX\) is used directly without a filesystem, it will use the page cache. See "devdax" mode for raw device access that supports dax.
-* "devdax": The device−dax character device interface is a statically allocated / raw access analogue of filesystem−dax \(in previous ndctl releases this mode was named "dax" mode\). It allows memory ranges to be mapped without need of an intervening filesystem. The device−dax is interface strict, precise and predictable. Specifically the interface:
-  * Guarantees fault granularity with respect to a given page size \(4K, 2M, or 1G on x86\) set at configuration time.
-  * Enforces deterministic behavior by being strict about what fault scenarios are supported. I.e. if a device is configured with a 2M alignment an attempt to fault a 4K aligned offset will result in SIGBUS.
+• "raw": expose the namespace capacity directly with limitations. Neither a raw pmem namepace nor raw blk namespace support sector atomicity by default \(see "sector" mode below\). A raw pmem namespace may have limited to no dax support depending the kernel. In other words operations like direct−I/O targeting a dax buffer may fail for a pmem namespace in raw mode or indirect through a page−cache buffer. See "fsdax" and "devdax" mode for dax operation.
+
+• "sector": persistent memory, given that it is byte addressable, does not support sector atomicity. The problematic aspect of sector tearing is that most applications do not know they have a atomic sector update dependency. At least a disk rarely ever tears sectors and if it does it almost certainly returns a checksum error on access. Persistent memory devices will always tear and always silently. Until an application is audited to be robust in the presence of sector−tearing "safe" mode is recommended. This imposes some performance overhead and disables the dax capability. \(also known as "safe" or "btt" mode\)
+
+• "fsdax": A pmem namespace in this mode supports dax operation with a block−device based filesystem \(in previous ndctl releases this mode was named "memory" mode\). This mode comes at the cost of allocating per−page metadata. The capacity can be allocated from "System RAM", or from a reserved portion of "Persistent Memory" \(see the −−map= option\). NOTE: A filesystem that supports DAX is required for dax operation. If the raw block device \(/dev/pmemX\) is used directly without a filesystem, it will use the page cache. See "devdax" mode for raw device access that supports dax.
+
+• "devdax": The device−dax character device interface is a statically allocated / raw access analogue of filesystem−dax \(in previous ndctl releases this mode was named "dax" mode\). It allows memory ranges to be mapped without need of an intervening filesystem. The device−dax is interface strict, precise and predictable. Specifically the interface:
+
+• Guarantees fault granularity with respect to a given page size \(4K, 2M, or 1G on x86\) set at configuration time.
+
+• Enforces deterministic behavior by being strict about what fault scenarios are supported. I.e. if a device is configured with a 2M alignment an attempt to fault a 4K aligned offset will result in SIGBUS.
 
 −s, −−size=
 
 For NVDIMM devices that support namespace labels, set the namespace size in bytes. Otherwise it defaults to the maximum size specified by platform firmware. This option supports the suffixes "k" or "K" for KiB, "m" or "M" for MiB, "g" or "G" for GiB and "t" or "T" for TiB.
 
-For pmem namepsaces the size must be a multiple of the interleave−width and the namespace alignment \(see below\).
+For pmem namepsaces the size must be a multiple of the  
+interleave−width and the namespace alignment \(see  
+below\).
 
 −a, −−align
 
@@ -95,10 +102,14 @@ Specify the logical sector size \(LBA size\) of the Linux block device associate
 
 A pmem namespace in "fsdax" or "devdax" mode requires allocation of per−page metadata. The allocation can be drawn from either:
 
-* "mem": typical system memory
-* "dev": persistent memory reserved from the namespace
+• "mem": typical system memory
 
-Given relative capacities of "Persistent Memory" to "System RAM" the allocation defaults to reserving space out of the namespace directly \("−−map=dev"\). The overhead is 64−bytes per 4K \(16GB per 1TB\) on x86.
+• "dev": persistent memory reserved from the namespace
+
+Given relative capacities of "Persistent Memory" to "System  
+RAM" the allocation defaults to reserving space out of the  
+namespace directly \("−−map=dev"\). The overhead is 64−bytes per  
+4K \(16GB per 1TB\) on x86.
 
 -c, --continue 
 
@@ -112,21 +123,17 @@ Unless this option is specified the _reconfigure namespace_ operation will fail 
 
 Legacy NVDIMM devices do not support namespace labels. In that case the kernel creates region−sized namespaces that can not be deleted. Their mode can be changed, but they can not be resized smaller than their parent region. This is termed a "label−less namespace". In contrast, NVDIMMs and hypervisors that support the ACPI 6.2 label area definition \(ACPI 6.2 Section 6.5.10 NVDIMM Label Methods\) support "labelled namespace" operation.
 
-* There are two cases where the kernel will default to label−less operation:
-  * NVDIMM does not support labels
-  * The NVDIMM supports labels, but the Label Index Block \(see UEFI 2.7\) is not present and there is no capacity aliasing between _blk_ and _pmem_ regions.
-* In the latter case the configuration can be upgraded to labelled operation by writing an index block on all DIMMs in a region and re−enabling that region. The _autolabel_ capability of _ndctl create−namespace −−reconfig_ tries to do this by default if it can determine that all DIMM capacity is referenced by the namespace being reconfigured. It will otherwise fail to autolabel and remain in label−less mode if it finds a DIMM contributes capacity to more than one region. This check prevents inadvertent data loss of that other region is in active use. The −−autolabel option is implied by default, the −−no−autolabel option can be used to disable this behavior. When automatic labeling fails and labelled operation is still desired the safety policy can be bypassed by the following commands, note that all data on all regions is forfeited by running these commands:
+• There are two cases where the kernel will default to label−less operation:
 
-```text
-ndctl disable−region all
-ndctl init−labels all
+• NVDIMM does not support labels
+
+• The NVDIMM supports labels, but the Label Index Block \(see UEFI 2.7\) is not present and there is no capacity aliasing between _blk_ and _pmem_ regions.
+
+• In the latter case the configuration can be upgraded to labelled operation by writing an index block on all DIMMs in a region and re−enabling that region. The _autolabel_ capability of _ndctl create−namespace −−reconfig_ tries to do this by default if it can determine that all DIMM capacity is referenced by the namespace being reconfigured. It will otherwise fail to autolabel and remain in label−less mode if it finds a DIMM contributes capacity to more than one region. This check prevents inadvertent data loss of that other region is in active use. The −−autolabel option is implied by default, the −−no−autolabel option can be used to disable this behavior. When automatic labeling fails and labelled operation is still desired the safety policy can be bypassed by the following commands, note that all data on all regions is forfeited by running these commands:
+
+ndctl disable−region all  
+ndctl init−labels all  
 ndctl enable−region all
-```
-
-   
--R, --autorecover, --no-autorecover
-
-By default, if a namespace creation attempt fails, ndctl will cleanup the partially initialized namespace. Use --no-autorecover to disable this behavior for debug and development scenarios where it useful to have the label and info-block state preserved after a failure.
 
 −v, −−verbose
 
@@ -146,5 +153,5 @@ Copyright \(c\) 2016 − 2019, Intel Corporation. License GPLv2: GNU GPL version
 
 ## SEE ALSO
 
-[ndctl−zero−labels\(1\)](ndctl-zero-labels.md), [ndctl−init−labels\(1\)](ndctl-init-labels.md), [ndctl−disable−namespace\(1\)](ndctl-disable-namespace.md), [ndctl−enable−namespace\(1\)](ndctl-enable-namespace.md), _UEFI NVDIMM Label Protocol_ [http://www.uefi.org/sites/default/files/resources/UEFI\_Spec\_2\_7.pdf](http://www.uefi.org/sites/default/files/resources/UEFI_Spec_2_7.pdf), _Linux Persistent Memory Wiki_ [https://nvdimm.wiki.kernel.org](https://nvdimm.wiki.kernel.org)
+[ndctl−zero−labels\(1\)](ndctl-zero-labels.md), [ndctl−init−labels\(1\)](ndctl-init-labels.md), [ndctl−disable−namespace\(1\)](ndctl-disable-namespace.md), [ndctl−enable−namespace\(1\)](ndctl-enable-namespace.md), _UEFI NVDIMM Label Protocol_ [http://www.uefi.org/sites/default/files/resources/UEFI\_Spec\_2\_7.pdf](http://www.uefi.org/sites/default/files/resources/UEFI_Spec_2_7.pdf) _Linux Persistent Memory Wiki_ [https://nvdimm.wiki.kernel.org](https://nvdimm.wiki.kernel.org)
 
