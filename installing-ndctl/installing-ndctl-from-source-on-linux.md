@@ -1,6 +1,6 @@
-# Installing NDCTL from Source on Linux
+# Installing NDCTL and DAXCTL from Source on Linux
 
-These instructions provide a step-by-step guide for installing the `ndctl` and `daxctl` utilities from the latest GitHub [master branch](https://github.com/pmem/ndctl).
+These instructions provide a step-by-step guide for installing the `ndctl` and `daxctl` utilities from the GitHub project [master branch](https://github.com/pmem/ndctl).
 
 ### 1. Install the Prerequisites
 
@@ -8,7 +8,7 @@ There are a number of packages required for the build steps that may not be inst
 
 [https://github.com/pmem/ndctl/blob/master/ndctl.spec.in](https://github.com/pmem/ndctl/blob/master/ndctl.spec.in)
 
-To successfully compile ndctl from source with documentation, the following packages are required
+To successfully compile ndctl and daxctl from source with documentation, the following packages are required
 
 * autoconf 
 * automake 
@@ -54,28 +54,34 @@ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc asciidoctor xmlto li
 {% endtab %}
 
 {% tab title="RHEL & CentOS" %}
-Some of the required packages can be found in the EPEL repository. Verify the EPEL repository is active:
+These instructions apply to RHEL, CentOS, and RHEL for SAP HANA v7.6 or later.
+
+Some of the required packages can be found in the EPEL repository \(Extra Packages for Enterprise Linux\). 
+
+Verify the EPEL repository is available and active:
+
+```text
+yum repolist
+```
+
+Example:
 
 ```text
 $ yum repolist
+repo id                                                       repo name                                      status
+epel/x86_64                                                   Extra Packages for Enterprise Linux 7 - x86_64 13,217
 ```
 
 If the EPEL repository is not listed, install and activate it using:
 
 ```text
-$ sudo yum install epel-release
+sudo yum install epel-release
 ```
 
 Install the required packages
 
 ```text
-$ sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
-```
-{% endtab %}
-
-{% tab title="SLES & OpenSUSE" %}
-```text
-$ sudo zypper install -y git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
+sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
 ```
 {% endtab %}
 
@@ -83,7 +89,7 @@ $ sudo zypper install -y git gcc gcc-c++ autoconf automake asciidoc bash-complet
 **For Ununtu 18.04 \(Bionic\) and Debian 9 \(Stretch\) or later:**
 
 ```text
-$ sudo apt install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev libfabric1 libfabric-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
+sudo apt install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev libfabric1 libfabric-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
 ```
 
 **For Ubuntu 16.04 \(Xenial\) and Debian 8 \(Jessie\):**
@@ -93,7 +99,7 @@ Earlier releases of Ubuntu and Debian do not have libfabric1 or libfabric-dev av
 {% endhint %}
 
 ```text
-$ sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
+sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
 ```
 {% endtab %}
 {% endtabs %}
@@ -103,24 +109,22 @@ $ sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bas
 2.1\) If you're behind a company proxy, configure git to work with your proxy server first. The following configures a HTTP and HTTPS proxy for all users. Refer to the [git-config documentation](https://git-scm.com/docs/git-config) for more options and information.
 
 ```text
-$ git config --global http.proxy http://proxyUsername:proxyPassword@proxy.server.com:port
-
-$ git config --global https.proxy https://proxyUsername:proxyPassword@proxy.server.com:port
+git config --global http.proxy http://proxyUsername:proxyPassword@proxy.server.com:port
+git config --global https.proxy https://proxyUsername:proxyPassword@proxy.server.com:port
 ```
 
 2.2\) Create a working directory to clone the ndctl GitHub repository to, eg: 'downloads'
 
 ```text
-$ sudo mkdir /downloads
-$ sudo chmod +w /downloads
+mkdir ~/downloads
 ```
 
 2.3\) Clone the repository:
 
 ```text
-$ cd /downloads
-$ sudo git clone https://github.com/pmem/ndctl
-$ cd ndctl
+cd ~/downloads
+git clone https://github.com/pmem/ndctl
+cd ndctl
 ```
 
 ### 3. Build
@@ -128,9 +132,9 @@ $ cd ndctl
 The following configures ndctl to be installed in to the /usr/local directory.
 
 ```text
-$ sudo ./autogen.sh
-$ sudo ./configure CFLAGS='-g -O2' --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
-$ sudo make
+./autogen.sh
+./configure CFLAGS='-g -O2' --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
+make
 ```
 
 #### **Build using an alternative compiler**
@@ -138,7 +142,7 @@ $ sudo make
 **Note:** If you want to compile with a different compiler other than gcc, you have to provide the CC and CXX environment variables. For example:
 
 ```text
-$ sudo make CC=clang CXX=clang++
+make CC=clang CXX=clang++
 ```
 
 These variables are independent and setting CC=clang does not set CXX=clang++.
@@ -148,15 +152,15 @@ These variables are independent and setting CC=clang does not set CXX=clang++.
 To compile ndctl with debugging, use the `--enable-debug` option:
 
 ```text
-$ sudo ./autogen.sh
-$ sudo ./configure CFLAGS='-g -O2' --enable-debug --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
-$ sudo make
+./autogen.sh
+./configure CFLAGS='-g -O2' --enable-debug --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
+make
 ```
 
 For a full list of configure options use:
 
 ```text
-$ ./configure --help
+./configure --help
 ```
 
 ### 4. Install
@@ -164,7 +168,7 @@ $ ./configure --help
 Once ndctl has successfully been compiled, it can be installed using the following:
 
 ```text
-$ sudo make install
+sudo make install
 ```
 
 ### 5. Build and Run Unit Tests \(Optional\)

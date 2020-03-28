@@ -173,3 +173,163 @@ A filtered list of NVDIMMs can shown using the `-d <nmemX>` or `-dimm <nmemX>` o
 # ndctl list -Di -dimm nmem0
 ```
 
+## Sanitize NVDIMMs
+
+Sanitizing one or more NVDIMMs perform a cryptographic destruction or overwrite of the contents of the given NVDIMM\(s\).  The sanitize-dimm command performs a cryptographic destruction of the contents of the given NVDIMM. It scrambles the data, and any metadata or info-blocks, but it doesn’t modify namespace labels. Therefore, any namespaces on regions associated with the given NVDIMM will be retained, but they will end up in the raw mode.
+
+Additionally, after completion of this command, the security and passphrase for the given NVDIMM will be disabled, and the passphrase and any key material will also be removed from the keyring and the ndctl keys directory at /etc/ndctl/keys.
+
+The command supports two different methods of performing the cryptographic erase. The default is crypto-erase, but additionally, an overwrite option is available which overwrites not only the data area, but also the label area, thus losing record of any namespaces the given NVDIMM participates in.
+
+{% hint style="info" %}
+Sanitizing NVDIMMs requires the region to be disabled first. If there are existing namespaces, those too must be destroyed or disabled. See the [Managing Regions](managing-regions.md) section for more information.
+{% endhint %}
+
+### Examples
+
+Sanitize a single NVDIMM. This requires the region is disabled. The following destroys all namespaces, disables the region, the sanitizes the DIMMs within the region.
+
+1\) Stop all applications that use a namespace associated with the NVDIMMs that need to be sanitized.
+
+2\) Unmount any mounted file systems
+
+```text
+$ sudo umount <mountpoint>
+```
+
+3\) Destroy the namespaces
+
+```text
+$ sudo ndctl destroy-namespace --force [all | --region X]
+```
+
+4\) Identify the NVDIMMs associated with the region using the `ndctl list -Rvv` or `ndctl list -DR` command. `-D` displays DIMMs, `-R` displays regions. The JSON formatted output shows the hierarchy.
+
+```text
+$ sudo ndctl list -DR
+{
+...
+  "regions":[
+    {
+      "dev":"region1",
+      "size":1623497637888,
+      "available_size":0,
+      "max_available_extent":0,
+      "type":"pmem",
+      "iset_id":-2506113243053544244,
+      "mappings":[
+        {
+          "dimm":"nmem11",
+          "offset":268435456,
+          "length":270582939648,
+          "position":5
+        },
+        {
+          "dimm":"nmem10",
+          "offset":268435456,
+          "length":270582939648,
+          "position":1
+        },
+        {
+          "dimm":"nmem9",
+          "offset":268435456,
+          "length":270582939648,
+          "position":3
+        },
+        {
+          "dimm":"nmem8",
+          "offset":268435456,
+          "length":270582939648,
+          "position":2
+        },
+        {
+          "dimm":"nmem7",
+          "offset":268435456,
+          "length":270582939648,
+          "position":4
+        },
+        {
+          "dimm":"nmem6",
+          "offset":268435456,
+          "length":270582939648,
+          "position":0
+        }
+      ],
+      "persistence_domain":"memory_controller"
+    },
+    {
+      "dev":"region0",
+      "size":1623497637888,
+      "available_size":1597727834112,
+      "max_available_extent":1597727834112,
+      "type":"pmem",
+      "iset_id":3259620181632232652,
+      "mappings":[
+        {
+          "dimm":"nmem5",
+          "offset":268435456,
+          "length":270582939648,
+          "position":5
+        },
+        {
+          "dimm":"nmem4",
+          "offset":268435456,
+          "length":270582939648,
+          "position":1
+        },
+        {
+          "dimm":"nmem3",
+          "offset":268435456,
+          "length":270582939648,
+          "position":3
+        },
+        {
+          "dimm":"nmem2",
+          "offset":268435456,
+          "length":270582939648,
+          "position":2
+        },
+        {
+          "dimm":"nmem1",
+          "offset":268435456,
+          "length":270582939648,
+          "position":4
+        },
+        {
+          "dimm":"nmem0",
+          "offset":268435456,
+          "length":270582939648,
+          "position":0
+        }
+      ],
+      "persistence_domain":"memory_controller"
+    }
+  ]
+}
+
+```
+
+5\) Disable the region\(s\)
+
+```text
+$ sudo ndctl disable-region 1
+disabled 1 region
+```
+
+6\) Sanitize the DIMM\(s\) associated with the region\(s\) using the overwrite \(`-o`\) procedure. The -`c` \(cryptographic\) option works on DIMMs that were previously encrypted.
+
+```text
+$ sudo ndctl sanitize-dimm -o nmem6 nmem7 nmem8 nmem9 nmem10 nmem11
+overwrite issued for 6 nmems.
+```
+
+{% hint style="info" %}
+Note: If the DIMMs were not encrypted with a passphrase, you may see harmless messages such as the following for each DIMM
+
+```text
+failed to open file /etc/ndctl/keys/nvdimm_8089-a2-1837-00000e88_{hostname}.blob: No such file or directory
+```
+{% endhint %}
+
+7\) You may need to re-provision the NVDIMMs using the vendors utility. For example, use [ipmctl ](https://docs.pmem.io/ipmctl-user-guide/)for Intel Optane DC Persistent Memory to recreate the goal. Then use `ndctl` to [create the namespace configuration](managing-namespaces.md).
+

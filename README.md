@@ -9,5 +9,26 @@
 * Enabling and Disabling NVDIMMs, Regions, and Namespaces
 * Managing NVDIMM Labels
 
+## What's new in v68
 
+This release incorporates functionality up to the 5.6 kernel.
+
+Highlights for this release include new commands to read-infoblock and write-infoblock, improvements and tests related to alignment constraints, misc build/compilation related fixes, and misc usability and documentation fixes.
+
+Commands: 
+
+* zero-labels: display an error if regions are active 
+* destroy-namespace: fix seed namespace accounting 
+* list: drop named list objects from verbose listing 
+* \*-namespace: emit better errors on failure 
+* read-infoblock: new command to read an infoblock 
+* write-infoblock: new command to create and write an infoblock
+
+APIs: 
+
+* ndctl\_namespace\_get\_target\_node 
+* ndctl\_namespace\_is\_configuration\_idle 
+* ndctl\_region\_get\_align
+* ndctl\_region\_get\_target\_node 
+* ndctl\_region\_set\_align
 
