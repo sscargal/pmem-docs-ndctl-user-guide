@@ -84,8 +84,10 @@ sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlt
 {% endtab %}
 
 {% tab title="SLES & OpenSUSE" %}
+Install the prerequisite packages
+
 ```text
-$ sudo zypper install -y git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
+sudo zypper install -y git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
 ```
 {% endtab %}
 
@@ -93,7 +95,7 @@ $ sudo zypper install -y git gcc gcc-c++ autoconf automake asciidoc bash-complet
 **For Ununtu 18.04 \(Bionic\) and Debian 9 \(Stretch\) or later:**
 
 ```text
-$ sudo apt install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev libfabric1 libfabric-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
+sudo apt install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev libfabric1 libfabric-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
 ```
 
 **For Ubuntu 16.04 \(Xenial\) and Debian 8 \(Jessie\):**
@@ -103,7 +105,7 @@ Earlier releases of Ubuntu and Debian do not have libfabric1 or libfabric-dev av
 {% endhint %}
 
 ```text
-$ sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
+sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-completion xmlto libtool pkg-config libglib2.0-0 libglib2.0-dev doxygen graphviz pandoc libncurses5 libkmod2 libkmod-dev libudev-dev uuid-dev libjson-c-dev libkeyutils-dev
 ```
 {% endtab %}
 {% endtabs %}
