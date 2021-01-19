@@ -182,6 +182,10 @@ Include namespace info in the listing. Namespace info is listed by default if no
 
 Include idle \(not enabled\) devices in the listing
 
+-c, --configured
+
+Include configured devices \(non-zero sized namespaces\) regardless of whether they are enabled, or not. Other devices besides namespaces are always considered "configured".
+
 −C, −−capabilities
 
 Include region capabilities in the listing, i.e. supported namespace modes and variable properties like sector sizes and alignments.
@@ -218,11 +222,9 @@ Include media errors \(badblocks\) in the listing. Note that the _badblock\_coun
 
 Increase verbosity of the output. This can be specified multiple times to be even more verbose on the informational and miscellaneous output, and can be used to override omitted flags for showing specific information.
 
-• **−v** In addition to the enabled namespaces default output, show the numa\_node, raw\_uuid, and bad block media errors.
-
-• **−vv** Everything _−v_ provides, plus automatically enable −−dimms, −−buses, and −−regions.
-
-• **−vvv** Everything _−vv_ provides, plus −−health, −−capabilities, −−idle, and −−firmware.
+* **−v** In addition to the enabled namespaces default output, show the numa\_node, raw\_uuid, and bad block media errors.
+* **−vv** Everything _−v_ provides, plus automatically enable −−dimms, −−buses, and −−regions.
+* **−vvv** Everything _−vv_ provides, plus −−health, −−capabilities, −−idle, and −−firmware.
 
 −u, −−human
 
@@ -249,6 +251,14 @@ Format numbers representing storage sizes, or offsets as human readable strings 
  "badblock_count":8
 }
 ```
+
+## ENVIRONMENT VARIABLES
+
+### _NDCTL\_LIST\_LINT_
+
+A bug in the "ndctl list" output needs to be fixed with care for other tooling that may have developed a dependency on the buggy behavior. The NDCTL\_LIST\_LINT variable is an opt-in to apply fixes, and not regress previously shipped behavior by default. This environment variable applies the following fixups:
+
+* Fix "ndctl list -Rv" to only show region objects and not include namespace objects.
 
 ## COPYRIGHT
 

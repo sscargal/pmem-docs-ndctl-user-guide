@@ -20,6 +20,7 @@ This section links to the online man pages:
 * [ndctl-list](ndctl-list.md) - print the platform nvdimm device topology and attributes 
 * [ndctl-load-keys](ndctl-load-keys.md) - load the master key \(kek\) and encrypted passphrases into the keyring
 * [ndctl-monitor](ndctl-monitor.md) - Monitor the SMART events from NVDIMMs 
+* [ndctl-read-infoblock](ndctl-read-infoblock.md) - read and optionally parse the info-block a namespace
 * [ndctl-read-labels](ndctl-read-labels.md) - read out the label area on a NVDIMM or set of NVDIMMs
 * [ndctl-remove-passphrase](ndctl-remove-passphrase.md) - Stop an NVDIMM from locking at power-loss and requiring a passphrase to access media
 * [ndctl-sanitize-dimm](ndctl-sanitize-dimm.md) - Perform a cryptographic destruction or overwrite of the contents of the given NVDIMM\(s\)
@@ -29,6 +30,7 @@ This section links to the online man pages:
 * [ndctl-update-passphrase](ndctl-update-passphrase.md) - update the security passphrase for one or more NVDIMMs
 * [ndctl-wait-overwrite](ndctl-wait-overwrite.md) - wait for an overwrite operation to complete
 * [ndctl-wait-scrub](untitled-2.md) - wait for an Address Range Scrub \(ARS\) operation to complete
+* [ndctl-write-infoblock](ndctl-write-infoblock.md) - generate and write an infoblock
 * [ndctl-write-labels](ndctl-write-labels.md) - write data to the label area on a dimm
 * [ndctl-zero-labels](ndctl-zero-labels.md) - zero out the label area on a dimm or set of dimms
 

@@ -63,6 +63,8 @@ enable-namespace
 disable-namespace
 create-namespace
 destroy-namespace
+read-infoblock
+write-infoblock
 check-namespace
 clear-errors
 enable-region
@@ -106,17 +108,17 @@ An alternative method for listing commands uses the TAB key completion feature o
 
 ```text
 # ndctl <TAB> <TAB>
-check-labels        freeze-security     setup-passphrase
-check-namespace     help                start-scrub
-clear-errors        init-labels         update-firmware
-create-namespace    inject-error        update-passphrase
-destroy-namespace   inject-smart        version
-disable-dimm        list                wait-overwrite
-disable-namespace   load-keys           wait-scrub
-disable-region      monitor             write-labels
-enable-dimm         read-labels         zero-labels
-enable-namespace    remove-passphrase
-enable-region       sanitize-dimm
+check-labels        freeze-security     sanitize-dimm
+check-namespace     help                setup-passphrase
+clear-errors        init-labels         start-scrub
+create-namespace    inject-error        update-firmware
+destroy-namespace   inject-smart        update-passphrase
+disable-dimm        list                version
+disable-namespace   load-keys           wait-overwrite
+disable-region      monitor             wait-scrub
+enable-dimm         read-infoblock      write-infoblock
+enable-namespace    read-labels         write-labels
+enable-region       remove-passphrase   zero-labels
 ```
 
 ```text
@@ -166,6 +168,7 @@ ndctl-inject-smart (1) - perform smart threshold/injection operations on a DIMM
 ndctl-list (1)       - dump the platform nvdimm device topology and attributes in json
 ndctl-load-keys (1)  - load the kek and encrypted passphrases into the keyring
 ndctl-monitor (1)    - Monitor the smart events of nvdimm objects
+ndctl-read-infoblock (1) - read and optionally parse the info-block a namespace
 ndctl-read-labels (1) - read out the label area on a dimm or set of dimms
 ndctl-remove-passphrase (1) - Stop a DIMM from locking at power-loss and requiring a passphrase to access media
 ndctl-sanitize-dimm (1) - Perform a cryptographic destruction or overwrite of the contents of the given NVDIMM(s)
@@ -175,6 +178,7 @@ ndctl-update-firmware (1) - provides for updating the firmware on an NVDIMM
 ndctl-update-passphrase (1) - update the security passphrase for an NVDIMM
 ndctl-wait-overwrite (1) - wait for an overwrite operation to complete
 ndctl-wait-scrub (1) - wait for an Address Range Scrub (ARS) operation to complete
+ndctl-write-infoblock (1) - generate and write an infoblock
 ndctl-write-labels (1) - write data to the label area on a dimm
 ndctl-zero-labels (1) - zero out the label area on a dimm or set of dimms
 ```
