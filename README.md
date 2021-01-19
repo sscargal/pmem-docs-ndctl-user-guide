@@ -9,26 +9,23 @@
 * Enabling and Disabling NVDIMMs, Regions, and Namespaces
 * Managing NVDIMM Labels
 
-## What's new in v68
+## What's new in v67
 
-This release incorporates functionality up to the 5.6 kernel.
+This release incorporates functionality up to the 5.4 kernel, and adds a number of bug fixes, and improvements.
 
-Highlights for this release include new commands to read-infoblock and write-infoblock, improvements and tests related to alignment constraints, misc build/compilation related fixes, and misc usability and documentation fixes.
+Highlights include small changes for PowerPC compatibility, improvements to the dax.sh unit test to detect failures in mapping huge pages, support for the 'security frozen' attribute, user experience improvements for the daxctl-reconfigure-device command, including an option to specify movable vs. non-movable state for onlining memory, and an option to allow create-namespaces to create a maximal configuration until it exhausts all available region capacity.
 
 Commands: 
 
-* [zero-labels](ndctl-man-pages/ndctl-zero-labels.md): display an error if regions are active 
-* destroy-namespace: fix seed namespace accounting 
-* [list](ndctl-man-pages/ndctl-list.md): drop named list objects from verbose listing 
-* \*-namespace: emit better errors on failure 
-* [read-infoblock](ndctl-man-pages/ndctl-read-infoblock.md): new command to read an infoblock 
-* [write-infoblock](ndctl-man-pages/ndctl-write-infoblock.md): new command to create and write an infoblock
+* [create-namespace](ndctl-man-pages/ndctl-create-namespace.md): add --continue option 
+* [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): add --no-movable option 
+* [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): display movable state in listings 
+* [daxctl-reconfigure-device](daxctl-man-pages/daxctl-reconfigure-device.md): detect races in memory onlining 
+* [ndctl-freeze-security](ndctl-man-pages/ndctl-freeze-security.md): support for 'security frozen' attribute
 
 APIs: 
 
-* ndctl\_namespace\_get\_target\_node 
-* ndctl\_namespace\_is\_configuration\_idle 
-* ndctl\_region\_get\_align
-* ndctl\_region\_get\_target\_node 
-* ndctl\_region\_set\_align
+* ndctl\_dimm\_security\_is\_frozen 
+* daxctl\_memory\_is\_movable 
+* daxctl\_memory\_online\_no\_movable
 

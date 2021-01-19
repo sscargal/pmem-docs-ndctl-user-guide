@@ -137,12 +137,6 @@ The following configures ndctl to be installed in to the /usr/local directory.
 make
 ```
 
-For a full list of configure options use:
-
-```text
-./configure --help
-```
-
 #### **Build using an alternative compiler**
 
 **Note:** If you want to compile with a different compiler other than gcc, you have to provide the CC and CXX environment variables. For example:
@@ -163,12 +157,10 @@ To compile ndctl with debugging, use the `--enable-debug` option:
 make
 ```
 
-The ndctl code uses many statically defined functions which the compiler will optimize as inline assembly ****when referenced only once. This means the function name is removed from the ELF symbol table and tools such as gdb, ltrace, or bpftrace cannot show this information. It can make it more difficult to understand code flow or troubleshoot issues. Use the `-fno-inline -g3 -O0` options to compile ndctl with no optimizations to make all symbols \(functions\) available for tracing, use:
+For a full list of configure options use:
 
 ```text
-./autogen.sh
-./configure CFLAGS='-fno-inline -g3 -O0' --enable-debug --prefix=/usr/local --sysconfdir=/etc --libdir=/usr/local/lib64
-make
+./configure --help
 ```
 
 ### 4. Install
