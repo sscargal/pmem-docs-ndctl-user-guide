@@ -9,37 +9,35 @@
 * Enabling and Disabling NVDIMMs, Regions, and Namespaces
 * Managing NVDIMM Labels
 
-## What's new in v71
+## What's new in v70
 
-This release incorporates functionality up to the 5.10 kernel.
+This release incorporates functionality up to the 5.9 kernel.
 
-Highlights include support for the new device-dax subdivision functionality added in Linux in v5.10, including ways to create smaller devdax devices using daxctl/libdaxctl, as well as creating, listing, and restoring from a config dump, 'mappings' on these devices. Other updates include several static analysis fixups, reworking the license identification scheme for different sub-components, and a fix for the reconfigure-in-place workflow which tries to retain device names.
+Highlights include support for the new firmware activation facility, a new 'split-acpi' command in 'daxctl' to aid testing and debugging, and other minor fixes.
 
 Commands: 
 
-* daxctl-create-device: new command 
-* daxctl-destroy-device: new command 
-* daxctl-enable-device: new command 
-* daxctl-disable-device: new command 
-* daxctl-reconfigure-device: allow resizing devices 
-* ndctl-create-namespace: improve reconfigure in-place
+* update-firmware: add support for firmware activation 
+* list: updates for firmware activation 
+* activate-firmware: new command to trigger firmware activation 
+* daxctl-split-acpi: split ACPI tables for debugging
 
 Tests: 
 
-* daxctl-create.sh: new test for device-dax subdivision
+* revoke-devmem: new test to validate iomem protections 
+* update-firmware: update to test firmware activation
 
 APIs: 
 
-* daxctl\_dev\_get\_align 
-* daxctl\_dev\_set\_align 
-* daxctl\_dev\_set\_mapping
-* daxctl\_dev\_set\_size 
-* daxctl\_mapping\_get\_end 
-* daxctl\_mapping\_get\_first 
-* daxctl\_mapping\_get\_next 
-* daxctl\_mapping\_get\_offset 
-* daxctl\_mapping\_get\_size 
-* daxctl\_mapping\_get\_start 
-* daxctl\_region\_create\_dev 
-* daxctl\_region\_destroy\_dev
+* ndctl\_bus\_activate\_firmware 
+* ndctl\_bus\_clear\_fw\_activate\_noidle 
+* ndctl\_bus\_clear\_fw\_activate\_nosuspend 
+* ndctl\_bus\_get\_fw\_activate\_method 
+* ndctl\_bus\_get\_fw\_activate\_state 
+* ndctl\_bus\_set\_fw\_activate\_noidle 
+* ndctl\_bus\_set\_fw\_activate\_nosuspend 
+* ndctl\_dimm\_fw\_activate\_arm 
+* ndctl\_dimm\_fw\_activate\_disarm 
+* ndctl\_dimm\_get\_fw\_activate\_result 
+* ndctl\_dimm\_get\_fw\_activate\_state
 
