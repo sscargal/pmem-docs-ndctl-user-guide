@@ -9,5 +9,10 @@
 * Enabling and Disabling NVDIMMs, Regions, and Namespaces
 * Managing NVDIMM Labels
 
+## What's new in v71.1
 
+Fixes: 
+
+* ndctl/dimm: Attempt an abort upon firmware-update-busy status 
+* ndctl/dimm: Fix submit\_abort\_firmware\(\)
 
