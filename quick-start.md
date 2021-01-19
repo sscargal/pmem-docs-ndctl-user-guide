@@ -2,7 +2,7 @@
 
 The `ndctl` command is designed to be user friendly. Once [installed](installing-ndctl/), a list of commands can be shown using any of the following:
 
-1\) With no arguments or options, `ndctl` shows a simple usage message:
+1\) With no arguments or options, `ndctl` and `daxctl` show a simple usage message:
 
 ```text
 # ndctl
@@ -14,7 +14,18 @@ The `ndctl` command is designed to be user friendly. Once [installed](installing
  ndctl --list-cmds to see all available commands
 ```
 
-2\) Using `ndctl help` displays basic help and syntax:
+```text
+# daxctl
+
+ usage: daxctl [--version] [--help] COMMAND [ARGS]
+
+
+ See 'daxctl help COMMAND' for more information on a specific command.
+ daxctl --list-cmds to see all available commands
+
+```
+
+2\) Using `ndctl help` and `daxctl help` displays basic help and syntax:
 
 ```text
 # ndctl help
@@ -23,6 +34,18 @@ The `ndctl` command is designed to be user friendly. Once [installed](installing
 
  See 'ndctl help COMMAND' for more information on a specific command.
  ndctl --list-cmds to see all available commands
+
+```
+
+```text
+# daxctl help
+
+ usage: daxctl [--version] [--help] COMMAND [ARGS]
+
+
+ See 'daxctl help COMMAND' for more information on a specific command.
+ daxctl --list-cmds to see all available commands
+
 ```
 
 Below is an example of using the `ndctl help` command to launch the `create-namespace` man page:
@@ -31,7 +54,7 @@ Below is an example of using the `ndctl help` command to launch the `create-name
 # ndctl help create-namespace
 ```
 
-3\) Using `ndctl --list-cmds` lists all commands as a single list.
+3\) Using `ndctl --list-cmds` and `daxctl --list-cmds`lists all commands as a single list.
 
 ```text
 # ndctl --list-cmds
@@ -68,21 +91,43 @@ monitor
 help
 ```
 
-An alternative method for listing commands uses the TAB key completion feature of ndctl. By typing`ndctl <TAB> <TAB>` we can list the available commands, eg:
+```text
+# daxctl --list-cmds
+version
+list
+help
+migrate-device-model
+reconfigure-device
+online-memory
+offline-memory
+```
+
+An alternative method for listing commands uses the TAB key completion feature of `ndctl` and `daxctl`. By typing`ndctl <TAB> <TAB>` or `daxctl <TAB> <TAB>` we can list the available commands, eg:
 
 ```text
 # ndctl <TAB> <TAB>
-check-labels        disable-namespace   help                monitor             update-firmware     zero-labels
-check-namespace     disable-region      init-labels         read-labels         update-passphrase
-clear-errors        enable-dimm         inject-error        remove-passphrase   version
-create-namespace    enable-namespace    inject-smart        sanitize-dimm       wait-overwrite
-destroy-namespace   enable-region       list                setup-passphrase    wait-scrub
-disable-dimm        freeze-security     load-keys           start-scrub         write-labels
+check-labels        freeze-security     setup-passphrase
+check-namespace     help                start-scrub
+clear-errors        init-labels         update-firmware
+create-namespace    inject-error        update-passphrase
+destroy-namespace   inject-smart        version
+disable-dimm        list                wait-overwrite
+disable-namespace   load-keys           wait-scrub
+disable-region      monitor             write-labels
+enable-dimm         read-labels         zero-labels
+enable-namespace    remove-passphrase
+enable-region       sanitize-dimm
 ```
 
-### TAB Command and Argument Completion
+```text
+# daxctl <TAB> <TAB>
+version 	list	help	migrate-device-model	
+reconfigure-device	online-memory	offline-memory
+```
 
-`ndctl` supports command completion using the TAB key. For example, typing `ndctl enable-<TAB>` lists all commands beginning with 'enable', eg:
+## TAB Command and Argument Completion
+
+`ndctl` and `daxctl`supports command completion using the TAB key. For example, typing `ndctl enable-<TAB>` lists all commands beginning with 'enable', eg:
 
 ```text
 # ndctl enable-<TAB>
@@ -96,7 +141,7 @@ TAB completion also works with command arguments. For example, typing `ndctl ena
 all     nmem0
 ```
 
-### Getting Help
+## Getting Help
 
 NDCTL ships with a man page for each command. Each man page describes the required arguments and features in detail. Man pages can be found and accessed using the `man` or `ndctl` utilities. The following `man -k ndctl` searches for any man page containing the "ndctl" keyword:
 
@@ -134,6 +179,16 @@ ndctl-write-labels (1) - write data to the label area on a dimm
 ndctl-zero-labels (1) - zero out the label area on a dimm or set of dimms
 ```
 
+```text
+#  man -k daxctl
+daxctl (1)           - Provides enumeration and provisioning commands for the Linux kernel Device-DAX facility
+daxctl-list (1)      - dump the platform Device-DAX regions, devices, and attributes in json.
+daxctl-migrate-device-model (1) - Opt-in to the /sys/bus/dax device-model, allow for alternative Device-DAX instance drivers.
+daxctl-offline-memory (1) - Offline the memory for a device that is in system-ram mode
+daxctl-online-memory (1) - Online the memory for a device that is in system-ram mode
+daxctl-reconfigure-device (1) - Reconfigure a dax device into a different mode
+```
+
 {% hint style="info" %}
 Note: If `man -k ndctl` returns "ndctl: nothing appropriate." or similar, see the [Troubleshooting](troubleshooting.md) section to manually build the indexes.
 {% endhint %}
@@ -144,9 +199,9 @@ Additionally, executing `ndctl help <command>` can be used to display the man pa
 # ndctl help enable-dimm
 ```
 
-A list of ndctl man pages are available online. See '[NDCTL Man Pages](man-pages.md)' for a complete list.
+A list of ndctl and daxctl man pages are available online. See [NDCTL Man Pages](ndctl-man-pages/) and [DAXCTL Man Pages](daxctl-man-pages/) for a complete list.
 
-### Displaying Bus, NVDIMM, Region, and Namespace Information
+## Displaying Bus, NVDIMM, Region, and Namespace Information
 
 The `ndctl list` command is a very powerful and feature rich command. A list of options is shown below:
 
@@ -175,9 +230,11 @@ The `ndctl list` command is a very powerful and feature rich command. A list of 
     -R, --regions         include region info
     -N, --namespaces      include namespace info (default)
     -X, --device-dax      include device-dax info
+    -C, --capabilities    include region capability info
     -i, --idle            include idle devices
     -M, --media-errors    include media errors
     -u, --human           use human friendly number formats
+    -v, --verbose         increase output detail
 ```
 
 Using the filters is a powerful way to limit the output.
@@ -219,4 +276,8 @@ To list all active/enabled and disabled/inactive \(idle\) NVDIMMs, Regions, and 
 ```text
 # ndctl list -iNuRD
 ```
+
+## Increasing output verbosity
+
+The `-v, --verbose` option increases the output verbosity of the command. Using `-vv` or -`-vvv` further increases the output and verbosity.
 
