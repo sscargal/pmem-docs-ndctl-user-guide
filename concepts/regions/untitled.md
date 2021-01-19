@@ -27,7 +27,7 @@ _Figure 1: Example sysfs layout_
 
 Each unique interface \(BLK or PMEM\) to DPA space is identified by a region device with a dynamically assigned id \(REGION0 - REGION5\).
 
-1. The first portion of DIMM0 and DIMM1 are interleaved as REGION0. A
+1. The first portion of DIMM0 and DIMM1 is interleaved as REGION0. A
 
    single PMEM namespace is created in the REGION0-SPA-range that spans most
 
@@ -37,41 +37,14 @@ Each unique interface \(BLK or PMEM\) to DPA space is identified by a region dev
 
    accessed space starting at DPA-offset \(a\) into each DIMM. In that
 
-   reclaimed space we create two BLK-aperture "namespaces" from REGION2 and
+   reclaimed space, we create two BLK-aperture "namespaces" from REGION2 and
 
    REGION3 where "blk2.0" and "blk3.0" are just human readable names that
 
    could be set to any user-desired name in the LABEL.
 
-2. In the last portion of DIMM0 and DIMM1 we have an interleaved
+2. In the last portion of DIMM0 and DIMM1 we have an interleaved system-physical-address range, REGION1, that spans those two DIMMs as well as DIMM2 and DIMM3. Some of REGION1 is allocated to a PMEM namespace named "pm1.0", the rest is reclaimed in 4 BLK-aperture namespaces \(for each DIMM in the interleave set\), "blk2.1", "blk3.1", "blk4.0", and "blk5.0".
+3. The portion of DIMM2 and DIMM3 that do not participate in the REGION1 interleaved system-physical-address range \(i.e. the DPA address past offset \(b\) are also included in the "blk4.0" and "blk5.0" namespaces. Note, that this example shows that BLK-aperture namespaces don't need to
 
-   ```text
-   system-physical-address range, REGION1, that spans those two DIMMs as
-   ```
-
-   well as DIMM2 and DIMM3. Some of REGION1 is allocated to a PMEM namespace
-
-   named "pm1.0", the rest is reclaimed in 4 BLK-aperture namespaces \(for
-
-   each DIMM in the interleave set\), "blk2.1", "blk3.1", "blk4.0", and
-
-   "blk5.0".
-
-3. The portion of DIMM2 and DIMM3 that do not participate in the REGION1
-
-   interleaved system-physical-address range \(i.e. the DPA address past
-
-   offset \(b\) are also included in the "blk4.0" and "blk5.0" namespaces.
-
-   Note, that this example shows that BLK-aperture namespaces don't need to
-
-   be contiguous in DPA-space.
-
-   This bus is provided by the kernel under the device
-
-   `/sys/devices/platform/nfit_test.0` when CONFIG\_NFIT\_TEST is enabled and
-
-   the nfit\_test.ko module is loaded. This not only test LIBNVDIMM but the
-
-   acpi\_nfit.ko driver as well.
+   be contiguous in DPA-space. This bus is provided by the kernel under the device`/sys/devices/platform/nfit_test.0` when CONFIG\_NFIT\_TEST is enabled and the nfit\_test.ko module is loaded. This not only test LIBNVDIMM but the acpi\_nfit.ko driver as well.
 

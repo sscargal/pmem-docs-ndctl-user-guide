@@ -2,7 +2,7 @@
 
 The namespace label area is a small persistent partition of capacity available on some NVDIMM devices. The label area is used to store the definition of any NVDIMM namespaces.
 
-The labels on the NVDIMMs cannot be edited directly. Changing the configuration can be achieved using the ndctl **create** or **destroy** commands. See [Managing Namespaces](managing-namespaces.md) and [Managing Regions](managing-regions.md). `ndctl` provides several label related commands shown below:
+The labels on the NVDIMMs cannot be edited directly. Changing the configuration can be achieved using the ndctl [**create** ](managing-namespaces.md#creating-namespaces)or [**destroy** ](managing-namespaces.md#destroying-namespaces)commands. See [Managing Namespaces](managing-namespaces.md) and [Managing Regions](managing-regions.md). `ndctl` provides several label related commands shown below:
 
 * [check-labels](managing-label-storage-areas-lsa.md#checking-labels) - determine if the given dimm\(s\) have a valid namespace index block
 * [init-labels](managing-label-storage-areas-lsa.md#initializing-labels) - initialize the label data area on a dimm or set of dimms
@@ -259,7 +259,7 @@ Activate any disabled regions
 
 ## Reading Labels
 
-The `read-labels` command dumps the data in a dimm’s label area to stdout or a file in raw or JSON format. When multiple dimms \(nmem's\) are specified, the data is concatenated.
+The `read-labels` command dumps the data in a DIMMs label area to stdout, or a file in raw or JSON format. When multiple DIMMs \(nmem's\) are specified, the data is concatenated. 
 
 Usage:
 
@@ -268,21 +268,35 @@ Usage:
 
 OPTIONS
        <memory device(s)>
-           One or more nmemX device names. The keyword all can be specified to operate on every dimm in the system, optionally
-           filtered by bus id (see --bus= option).
+           A nmemX device name, or a dimm id number. Restrict the operation to the specified dimm(s). The keyword all can be specified to
+           indicate the lack of any restriction, however this is the same as not supplying a --dimm option at all.
+
+       -s, --size=
+           Limit the operation to the given number of bytes. A size of 0 indicates to operate over the entire label capacity.
+
+       -O, --offset=
+           Begin the operation at the given offset into the label area.
 
        -b, --bus=
-           Limit operation to memory devices (dimms) that are on the given bus. Where bus can be a provider name or a bus id
-           number.
+           A bus id number, or a provider string (e.g. "ACPI.NFIT"). Restrict the operation to the specified bus(es). The keyword all can be
+           specified to indicate the lack of any restriction, however this is the same as not supplying a --bus option at all.
 
        -v
            Turn on verbose debug messages in the library (if ndctl was built with logging and debug enabled).
+
+       -I, --index
+           Limit the span of the label operation to just the index-block area. This is useful to determine if the dimm label area is
+           initialized. Note that this option and --size/--offset are mutually exclusive.
 
        -o, --output
            output file
 
        -j, --json
            parse the label data into json assuming the NVDIMM Namespace Specification format.
+
+       -u, --human
+           enable json output and convert number formats to human readable strings, for example show the size in terms of "KB", "MB", "GB", etc
+           instead of a signed 64-bit numbers per the JSON interchange format (implies --json).
 ```
 
 The following shows a label from nvdimm0 \(nmem0\) printed to stdout in JSON format.
@@ -525,5 +539,5 @@ Activate any 'disabled' regions
 ]
 ```
 
-6\) New namespaces can now be created on the regions. See [Managing Namespaces](managing-namespaces.md) for more information.
+6\) New namespaces can now be created in the regions. See [Managing Namespaces](managing-namespaces.md) for more information.
 

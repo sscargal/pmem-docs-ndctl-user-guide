@@ -2,9 +2,9 @@
 
 ## Persistent Memory Concepts
 
-This section describes the basic concepts when configuring and managing NVDIMMs. The following describes terms used throughout this chapter.
+This section describes the basic concepts when configuring and managing NVDIMMs. The following describes the terms used throughout this chapter.
 
-**Interleave Sets:** two or more NVDIMMs create an N-Way interleave set to provide stripes read/write operations for increased throughput. Commonly 2-Way or 4-Way interleaving.
+**Interleave Sets:** two or more NVDIMMs create an N-Way interleave set to provide striped read/write operations for increased throughput. Commonly 2-Way or 4-Way interleaving.
 
 **Region:** a grouping of one or more NVDIMMs, or an interleaved set, that can be divided up into one or more Namespaces. Regions are created within interleaved sets.
 
@@ -17,13 +17,13 @@ This section describes the basic concepts when configuring and managing NVDIMMs.
 * **PMEM:** Direct access to the media via load/store operations. DAX Supported.
 * **BLK:** Direct access to the media via Apertures \(sliding memory windows\). DAX is not supported.
 
-**Mode:** defines which NVDIMM software features are enabled for a given Namespace. Namespace Modes include raw, sector, fsdax\(memory\), and devdax\(dax\). Sibling Namespaces of the same parent Region will always have the same Type, but might be configured to have different Modes.
+**Mode:** defines which NVDIMM software features are enabled for a given Namespace. Namespace Modes include raw, sector, fsdax\(memory\), and devdax\(dax\). Sibling Namespaces of the same parent Region will always have the same type, but might be configured to have different Modes.
 
 ## Configuration Options
 
 This section discusses some of the common configuration options but does not cover all possible supported config.
 
-Using one or more physical NVDIMMs, the available capacity can be configure in many different ways. Figure 1 below shows a typical Filesystem-DAX \(FSDAX\) configuration with three physical NVDIMMs that have been interleaved. All available capacity has been used to create a single region \(Region0\), namespace \(Namespace0.0\), and dax enabled filesystem created. Namespace naming convention is commonly X.Y where X is the region number and Y is the namespace. The persistent memory pool\(s\) are memory mapped to the application, thus allowing direct load/store access to the NVDIMMs.
+Using one or more physical NVDIMMs, the available capacity can be configured in many different ways. Figure 1 below shows a typical Filesystem-DAX \(FSDAX\) configuration with three physical NVDIMMs that have been interleaved. All available capacity has been used to create a single region \(Region0\), namespace \(Namespace0.0\), and dax enabled filesystem created. Namespace naming convention is commonly X.Y where X is the region number and Y is the namespace. The persistent memory pool\(s\) are memory mapped to the application, thus allowing direct load/store access to the NVDIMMs.
 
 ![](../.gitbook/assets/draw.io-gitbook-interleaved-dimms-fsdax.jpg)
 
