@@ -1,6 +1,6 @@
 # Managing Namespaces
 
-Regions can be partitioned in to one or more namespaces. Namespace operations include listing, creating, destroying, enabling, disabling, and checking \(validating\) using the following commands:
+Regions can be partitioned into one or more namespaces. Namespace operations include listing, creating, destroying, enabling, disabling, and checking \(validating\) using the following commands:
 
 * [list ](managing-namespaces.md#listing-namespaces)- dump the platform nvdimm device topology and attributes in json format 
 * [create-namespace](managing-namespaces.md#creating-namespaces) - provision or reconfigure a namespace 
@@ -135,6 +135,7 @@ The create-namespace command has a lot of options summarized below. The `ndctl-c
 * **-n, --name:** Specify a friendly name for namespaces that support labels
 * **-l, --sector-size:** Override the default sector size for block based namespaces
 * **-M, --map:** For 'fsdax' or 'devdax' namespaces, define whether metadata is stored in volatile memory \(mem\) or persistent storage \(dev\)
+* **-c, --continue:** Do not stop after creating one namespace. Instead, create as many namespaces as possible within the given --bus and --region filter restrictions.
 * **-f, --force:** Allow the operation to continue on enabled namespaces
 * **-L, --autolabel, --no-autolabel:** Manage labels for legacy NVDIMMs that do not support labels
 * **-v, --verbose:** Emit verbose messages during the creation process
@@ -202,18 +203,22 @@ When a namespace using the default `--map=dev` is created, the usable 'size' is 
   "regions":[
     {
       "dev":"region0",
-      "size":"249.00 GiB (267.36 GB)",
+      "size":"1512.00 GiB (1623.50 GB)",
+      "align":"96.00 MiB (100.66 MB)",
       "available_size":0,
+      "max_available_extent":0,
       "type":"pmem",
-      "iset_id":"0xb000000058000000",
+      "iset_id":"0x2d3c7f48f4e22ccc",
       "persistence_domain":"memory_controller",
       "namespaces":[
         {
           "dev":"namespace0.0",
           "mode":"fsdax",
           "map":"dev",
-          "size":"245.11 GiB (263.18 GB)",
-          "uuid":"19cccf5d-d227-42fe-b338-cfa882a6b6ce",
+          "size":"1488.37 GiB (1598.13 GB)",
+          "uuid":"19ee4959-28ef-42a7-912f-fdc16c9a1696",
+          "sector_size":512,
+          "align":2097152,
           "blockdev":"pmem0"
         }
       ]
@@ -350,6 +355,37 @@ Tagging the namespace with a friendly name or description using the '-n, --name'
 }
 ```
 
+**Example 4:** Automatically create as many namespaces as possible
+
+By default, the `create-namespace` operation creates a single namespace. On systems with more than one region \(usually defined by the number of CPU sockets\), this requires executing `create-namespace` for each region. On high CPU socket systems, this can be time consuming. Version 67 of ndctl introduced the `-c, --continue` option that will automatically create as many namespaces as it can. This is similar to using a FOR loop around `create-namespace`. This operation will abort if any creation attempt results in an error unless --force is also supplied.
+
+The following example shows how to automatically create two fsdax namespaces on empty regions. The size of the namespaces will use the full capacity of each region.
+
+```text
+# ndctl create-namespace -c
+{
+  "dev":"namespace1.0",
+  "mode":"fsdax",
+  "map":"dev",
+  "size":"1488.37 GiB (1598.13 GB)",
+  "uuid":"4eab54fb-452a-42a1-b6fb-172a14dfd0b4",
+  "sector_size":512,
+  "align":2097152,
+  "blockdev":"pmem1"
+}
+{
+  "dev":"namespace0.0",
+  "mode":"fsdax",
+  "map":"dev",
+  "size":"1488.37 GiB (1598.13 GB)",
+  "uuid":"303e1f77-84c1-4e45-a631-61a4551bdf3d",
+  "sector_size":512,
+  "align":2097152,
+  "blockdev":"pmem0"
+}
+created 2 namespaces
+```
+
 #### **DEVDAX Mode Examples**
 
 Create a pmem namespace with devdax mode using all available capacity
@@ -441,7 +477,7 @@ brw-rw----. 1 root disk 259, 0 Jul  9 10:52 /dev/pmem0
 
 ## Editing Namespace Properties
 
-Changing properties of existing namespaces can be done online using the `ndctl create-namespace -fe <namespace> <option=value>` command. The `-e, --reconfigure` flag edits existing namespaces. Using the `-f` flag does not require that the namespace be manually disabled. The command may still fail if the namespace is currently being used. Supported options are listed above in the [Creating Namespaces](managing-namespaces.md#creating-namespaces) section, or review the ndctl-create-namespace [man page](man-pages.md). Some namespace properties are read-only and cannot be changed using the `ndctl` utility.
+Changing properties of existing namespaces can be done online using the `ndctl create-namespace -fe <namespace> <option=value>` command. The `-e, --reconfigure` flag edits existing namespaces. Using the `-f` flag does not require that the namespace be manually disabled. The command may still fail if the namespace is currently being used. Supported options are listed above in the [Creating Namespaces](managing-namespaces.md#creating-namespaces) section, or review the ndctl-create-namespace [man page](ndctl-man-pages/). Some namespace properties are read-only and cannot be changed using the `ndctl` utility.
 
 [Resizing Namespaces](managing-namespaces.md#resizing-namespaces) or [Changing Namespace Modes](managing-namespaces.md#changing-namespace-modes) can be achieved by changing existing namespace properties. They are discussed below under their own headings to provide additional detail.
 

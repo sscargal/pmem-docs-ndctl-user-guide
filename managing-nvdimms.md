@@ -13,13 +13,18 @@ Observe the following restrictions when managing NVDIMMs
 The `ndct list -D` , or equivalent `ndct list --dimm` , can be used to show active/enabled NVDIMM devices on the system, eg:
 
 ```text
-# ndctl list -D
-{
-  "dev":"nmem0",
-  "id":"8089-a2-1809-00000107",
-  "handle":1,
-  "phys_id":29
-}
+# ndctl list -D -d nmem0
+[
+  {
+    "dev":"nmem0",
+    "id":"8089-a2-1837-00000be8",
+    "handle":1,
+    "phys_id":38,
+    "flag_failed_flush":true,
+    "flag_smart_event":true,
+    "security":"disabled"
+  }
+]
 ```
 
 ## Listing disabled/inactive NVDIMMs
@@ -28,24 +33,31 @@ By default, `ndctl` only lists enabled/active dimms, regions, and namespaces. To
 
 ```text
 # ndctl list -Di
-{
-  "dev":"nmem0",
-  "id":"8089-a2-1809-00000107",
-  "handle":0,
-  "phys_id":29
-}
-{
-  "dev":"nmem1",
-  "id":"9759-b5-1459-00000502",
-  "handle":1,
-  "phys_id":30
-  "state":"disabled"
-}
+[
+  {
+    "dev":"nmem0",
+    "id":"8089-a2-1837-00000bb3",
+    "handle":17,
+    "phys_id":40,
+    "state":"disabled",
+    "flag_failed_flush":true,
+    "flag_smart_event":true,
+    "security":"disabled"
+  },
+  {
+    "dev":"nmem3",
+    "id":"8089-a2-1837-00000b5e",
+    "handle":257,
+    "phys_id":44,
+    "flag_failed_flush":true,
+    "flag_smart_event":true,
+    "security":"disabled"
+  },
 ...
 ```
 
 {% hint style="info" %}
-NVDIMM vendor specific tools can be used to display more information about the NVDIMMs from the operating system layer. For example, Intel Optane DC Persistent Memory Modules can be managed using the [ipmctl](https://github.com/intel/ipmctl) utility. Refer to the [IPMCTL User Guide](https://docs.pmem.io/ipmctl-user-guide/) for more information. For other persistent memory products, refer to the vendor specific documentation.
+NVDIMM vendor specific tools can be used to display more information about the NVDIMMs from the operating system layer. For example, Intel Optane Persistent Memory Modules can be managed using the [ipmctl](https://github.com/intel/ipmctl) utility. Refer to the [IPMCTL User Guide](https://docs.pmem.io/ipmctl-user-guide/) for more information. For other persistent memory products, refer to the vendor specific documentation.
 {% endhint %}
 
 ## Disabling NVDIMMs
@@ -58,7 +70,7 @@ nmem0 is active, skipping...
 disabled 0 nmem
 ```
 
-1\) List the current active/enabled configuration
+1\) List the currently active/enabled configuration
 
 ```text
 # ndctl list -NRD
@@ -76,10 +88,11 @@ disabled 0 nmem
 
 See [Destroying Namespaces](managing-namespaces.md#destroying-namespaces) or [Disabling Namespaces](managing-namespaces.md#disabling-namespaces) for more information.
 
-4\) Disable the regions used by the NVDIMM \(nmem\) that needs to be disabled
+4\) Disable the region used by the NVDIMM \(nmem\) that needs to be disabled
 
 ```text
-# ndctl disable-region <region.X>
+# ndctl disable-region region0
+disabled 1 region
 ```
 
 See [Disabling Regions](managing-regions.md#disabling-regions) for more information.
@@ -111,13 +124,17 @@ disabled 12 nmem
 
 ```text
 # ndctl list -Di
-{
-  "dev":"nmem0",
-  "id":"8089-a2-1809-00000107",
-  "handle":1,
-  "phys_id":29,
-  "state":"disabled"
-}
+[
+  {
+    "dev":"nmem0",
+    "id":"8089-a2-1837-00000bb3",
+    "handle":17,
+    "phys_id":40,
+    "state":"disabled",   <----
+    "flag_failed_flush":true,
+    "flag_smart_event":true,
+    "security":"disabled"
+  },
 ...
 ```
 
@@ -127,13 +144,17 @@ disabled 12 nmem
 
 ```text
 # ndctl list -Di
-{
-  "dev":"nmem0",
-  "id":"8089-a2-1809-00000107",
-  "handle":1,
-  "phys_id":29,
-  "state":"disabled"
-}
+[
+  {
+    "dev":"nmem0",
+    "id":"8089-a2-1837-00000bb3",
+    "handle":17,
+    "phys_id":40,
+    "state":"disabled",
+    "flag_failed_flush":true,
+    "flag_smart_event":true,
+    "security":"disabled"
+  },
 ```
 
 2\) Enable the NVDIMM\(s\)
@@ -165,11 +186,21 @@ enabled 12 nmem
 # ndctl list -Di
 ```
 
-A filtered list of NVDIMMs can shown using the `-d <nmemX>` or `-dimm <nmemX>` option, eg:
+A filtered list of NVDIMMs can be shown using the `-d <nmemX>` or `-dimm <nmemX>` option, eg:
 
 ```text
 # ndctl list -Di -d nmem0
 - or -
-# ndctl list -Di -dimm nmem0
+# ndctl list -Di --dimm nmem0
 ```
+
+## Performing Secure Erase operations on NVDIMMs
+
+The `sanitize-dimm` command performs cryptographic destruction of the contents for the given NVDIMM. It scrambles the data and any metadata or info-blocks, but it doesn’t modify namespace labels. Therefore, any namespaces on regions associated with the given NVDIMM will be retained, but they will end up in the raw mode.
+
+Additionally, after completion of this command, the security and passphrase for the given NVDIMM will be disabled, and the passphrase and any key material will also be removed from the keyring and the ndctl keys directory at /etc/ndctl/keys.
+
+The command supports two different methods of performing the cryptographic erase. The default is crypto-erase, but additionally, an overwrite option is available which overwrites not only the data area but also the label area, thus losing record of any namespaces the given NVDIMM participates in.
+
+Refer to [Managing NVDIMM Security](managing-nvdimm-security.md) for more information.
 
