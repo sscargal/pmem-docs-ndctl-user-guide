@@ -104,7 +104,7 @@ sudo apt-get install -y git gcc g++ autoconf automake asciidoc asciidoctor bash-
 {% endtab %}
 
 {% tab title="SLES & OpenSUSE" %}
-These instructions were tested on OpenSUSE/SLES 12sp5, 15sp2, and OpenSUSE Leap15.2
+These instructions were tested on SLES 12sp5, 15sp2, and OpenSUSE Leap15.2
 
 ```text
 sudo zypper install git gcc gcc-c++ autoconf automake asciidoc xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod libkmod-devel libudev-devel libuuid-devel libjson-c-devel keyutils-devel
