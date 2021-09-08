@@ -56,7 +56,9 @@ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc asciidoctor xmlto li
 {% tab title="RHEL & CentOS" %}
 These instructions apply to RHEL, CentOS, and RHEL for SAP HANA v7.6 or later.
 
-Some of the required packages can be found in the EPEL repository \(Extra Packages for Enterprise Linux\). 
+Some of the required packages can be found in the EPEL \(Extra Packages for Enterprise Linux\) and PowerTools repositories. The PowerTools repository is available for CentOS 8.x or later. Instructions for CentOS 7.x and 8.x are described below.
+
+### CentOS 7.x
 
 Verify the EPEL repository is available and active:
 
@@ -80,8 +82,47 @@ sudo yum install epel-release
 
 Install the required packages
 
+```
+sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel make
+```
+
+### CentOS 8.x
+
+Note: CentOS 8.x uses the yum or dnf package manage commands. 
+
+Verify the EPEL repository is available and active:
+
 ```text
-sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel
+dnf repolist
+```
+
+Example:
+
+```text
+$ dnf repolist
+repo id                       repo name
+appstream                     CentOS Linux 8 - AppStream
+baseos                        CentOS Linux 8 - BaseOS
+extras                        CentOS Linux 8 - Extras       
+```
+
+If the EPEL repository is not listed, install and activate it using:
+
+```text
+sudo dnf install epel-release
+```
+
+If the PowerTools repository is not listed, install and activate it using:
+
+```text
+$ sudo dnf config-manager --set-enabled powertools
+```
+
+Install the required packages
+
+```
+$ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel keyutils-libs-devel gem make
+$ sudo gem install asciidoctor
 ```
 {% endtab %}
 
