@@ -86,9 +86,9 @@ Install the required packages
 sudo yum install git gcc gcc-c++ autoconf automake asciidoc bash-completion xmlto libtool pkgconfig glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel rubygem-asciidoctor keyutils-libs-devel make
 ```
 
-### CentOS 8.x
+### CentOS 8.x/CentOS Stream
 
-Note: CentOS 8.x uses the yum or dnf package manage commands. 
+Note: CentOS 8.x/CentOS Stream uses the yum or dnf package manager commands. Both are interchangeable, with dnf being the preferred tool.
 
 Verify the EPEL repository is available and active:
 
